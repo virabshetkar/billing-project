@@ -1,0 +1,11 @@
+<nav>
+  <button [cdkMenuTriggerFor]="menu">{{ currName() }} ▾</button>
+</nav>
+
+<ng-template #menu>
+  <div class="nav-list">
+    @for (nav of navItems; track nav.name) {
+      <button [routerLink]="'/' + nav.route" routerLinkActive="active">{{ nav.name }}</button>
+    }
+  </div>
+</ng-template>

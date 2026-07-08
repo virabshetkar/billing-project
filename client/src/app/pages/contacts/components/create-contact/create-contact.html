@@ -1,0 +1,31 @@
+<h1>Create Contact</h1>
+<form (submit)="onSubmit($event)">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input id="name" type="text" [formField]="contactForm.name" />
+  </div>
+  <small class="error">
+    @if (contactForm.name().touched() && contactForm.name().invalid()) {
+      {{ contactForm.name().errors()?.[0]?.message }}
+    }
+  </small>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input id="email" type="text" [formField]="contactForm.email" />
+  </div>
+  <small class="error">
+    @if (contactForm.email().touched() && contactForm.email().invalid()) {
+      {{ contactForm.email().errors()?.[0]?.message }}
+    }
+  </small>
+  <div class="form-group">
+    <label for="phone">Phone</label>
+    <input id="phone" type="text" [formField]="contactForm.phone" />
+  </div>
+  <small class="error">
+    @if (contactForm.phone().touched() && contactForm.phone().invalid()) {
+      {{ contactForm.phone().errors()?.[0]?.message }}
+    }
+  </small>
+  <button type="submit" [disabled]="contactForm().invalid()">Create</button>
+</form>

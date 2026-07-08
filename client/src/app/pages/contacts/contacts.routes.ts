@@ -1,0 +1,28 @@
+import { Routes } from '@angular/router';
+import { ContactsApi } from './services/contacts.api';
+
+export const routes: Routes = [
+  {
+    path: '',
+    loadComponent: () => import('./contacts.page').then((c) => c.ContactsPage),
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () =>
+          import('./components/contacts-home/contacts-home').then((c) => c.ContactsHome),
+      },
+      {
+        path: 'new',
+        loadComponent: () =>
+          import('./components/create-contact/create-contact').then((c) => c.CreateContact),
+      },
+      {
+        path: ':contactId',
+        loadComponent: () =>
+          import('./components/update-contact/update-contact').then((c) => c.UpdateContact),
+      },
+    ],
+    providers: [ContactsApi],
+  },
+];

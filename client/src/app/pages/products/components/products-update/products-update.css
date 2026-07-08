@@ -1,0 +1,41 @@
+:host {
+  display: grid;
+  height: 100%;
+  padding: 5rem 3rem;
+  align-content: center;
+  justify-content: center;
+}
+
+h1 {
+  font-weight: 100;
+}
+
+form {
+  width: 450px;
+  display: grid;
+  gap: 0.5rem;
+}
+
+small.error {
+  height: 1rem;
+  color: light-dark(#b00, var(--clr-danger));
+}
+
+textarea {
+  border: 1px solid var(--clr-gray-300);
+  background-color: var(--clr-gray-100);
+  resize: vertical;
+  outline: transparent;
+  padding: 0.5rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  button {
+    flex-grow: 1;
+    &.delete {
+      background-color: var(--clr-danger);
+    }
+  }
+}

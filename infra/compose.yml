@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=password
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql
+  pgAdmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=virabshetkar@email.com
+      - PGADMIN_DEFAULT_PASSWORD=password
+    ports:
+      - 8080:80
+    volumes:
+      - pgAdminData:/var/lib/pgadmin
+
+volumes:
+  pgdata:
+  pgAdminData:

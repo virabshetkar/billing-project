@@ -1,0 +1,81 @@
+:host {
+  display: grid;
+  height: 100vh;
+  height: 100dvh;
+  border-right: 1px solid var(--clr-gray-100);
+  align-content: start;
+}
+
+button {
+  border-radius: 0;
+  &.active {
+    background-color: var(--clr-gray-200);
+  }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+h1 {
+  font-weight: 100;
+  margin: 0;
+  padding: 0;
+}
+
+.contacts-list {
+  h3 {
+    position: sticky;
+    top: 0px;
+    background-color: light-dark(var(--clr-dark-900), var(--clr-dark-200));
+  }
+  display: grid;
+  overflow-y: auto;
+}
+
+.options-list {
+  display: block;
+  padding-block: 1rem;
+}
+
+.menu-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 1rem;
+  padding-block: 1rem;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column-reverse;
+  li {
+    button {
+      width: 100%;
+      text-align: start;
+    }
+  }
+}
+
+.empty-display {
+  display: grid;
+  place-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+h3 {
+  font-weight: 400;
+  margin: 0;
+  padding: 1rem;
+}

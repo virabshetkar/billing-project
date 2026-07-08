@@ -1,0 +1,17 @@
+:host {
+  display: grid;
+  place-content: center;
+  height: 100%;
+}
+
+h1 {
+  font-weight: 100;
+}
+
+h2 {
+  font-weight: 400;
+}
+
+button {
+  justify-self: right;
+}

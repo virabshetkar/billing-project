@@ -1,0 +1,28 @@
+<div class="menu-bar">
+  <a routerLink="/products"><h1>Products</h1></a>
+</div>
+<div class="options-list">
+  <h3>Actions</h3>
+  <ul>
+    <li>
+      <button type="button" routerLink="/products/new" routerLinkActive="active">Create</button>
+    </li>
+  </ul>
+</div>
+@if (products.hasValue() && products.value()?.length > 0) {
+  <h3>Products</h3>
+  <div class="products-list">
+    <ul>
+      @for (item of products.value(); track item.id) {
+        <li>
+          <button type="button" [routerLink]="['/products', item.id]" routerLinkActive="active" class="list-item-button">
+            <div class="text">
+            {{ item.title }}
+            </div>
+          </button>
+          <button type="button" class="delete" (click)="onDelete(item.id)">🗑</button>
+        </li>
+      }
+    </ul>
+  </div>
+}

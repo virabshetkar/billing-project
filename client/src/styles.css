@@ -1,0 +1,115 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/cdk/overlay-prebuilt.css';
+
+html {
+  color-scheme: light dark;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Open Sans',
+    'Helvetica Neue',
+    sans-serif;
+}
+
+html,
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+body {
+  margin: 0;
+  background-color: var(--clr-gray-50);
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+button {
+  border: none;
+  outline: transparent;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  background-color: var(--clr-gray-100);
+
+  &:hover {
+    background-color: var(--clr-gray-200);
+  }
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+:root {
+  --clr-gray-50: light-dark(#f7f7f7, #171717);
+  --clr-gray-100: light-dark(#ededed, #373737);
+  --clr-gray-200: light-dark(#e0e0e0, #555555);
+  --clr-gray-300: light-dark(#cdcdcd, #686868);
+  --clr-gray-400: light-dark(#a8a8a8, #909090);
+  --clr-gray-500: light-dark(#878787, #b0b0b0);
+  --clr-gray-600: light-dark(#606060, #d5d5d5);
+  --clr-gray-700: light-dark(#4d4d4d, #e6e6e6);
+  --clr-gray-800: light-dark(#2f2f2f, #f0f0f0);
+  --clr-gray-900: light-dark(#0f0f0f, #f8f8f8);
+  --clr-danger: light-dark(#e02424, #ef5350);
+}
+
+.form-group {
+  display: grid;
+  border-radius: 0.25rem;
+  overflow: hidden;
+  gap: 0.25rem;
+  label {
+    font-size: 1rem;
+    &.required {
+      &::after {
+        content: '*';
+        color: #d00;
+      }
+    }
+  }
+  input[type='text'] {
+    background-color: var(--clr-gray-100);
+    font-size: 1rem;
+    padding: 0.5rem;
+    border: none;
+    outline: transparent;
+  }
+  position: relative;
+
+  &::after,
+  &::before {
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    inset: auto 0 0 0;
+  }
+
+  &::after {
+    transform: scaleX(0);
+    transform-origin: left;
+    border: 1px solid;
+    transition: transform 300ms;
+    border-color: var(--clr-gray-800);
+  }
+  &::before {
+    border: 1px solid;
+    border-color: var(--clr-gray-300);
+  }
+
+  &:focus-within::after {
+    transform: scaleX(1);
+  }
+}

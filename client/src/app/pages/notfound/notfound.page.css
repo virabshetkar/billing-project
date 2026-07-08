@@ -1,0 +1,8 @@
+:host {
+  display: grid;
+  height: 100%;
+  place-content: center;
+}
+h1 {
+  font-weight: 100;
+}

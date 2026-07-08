@@ -1,0 +1,32 @@
+:host:has(.sidebar) {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  height: 100%;
+  grid-template-rows: auto 1fr;
+}
+
+.sidebar {
+  h1 {
+    font-weight: 100;
+  }
+  grid-row: span 2;
+}
+
+.main-content {
+  height: 100%;
+}
+
+h1 {
+  font-weight: 100;
+}
+
+h2 {
+  font-weight: 400;
+}
+
+.menu-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 1rem;
+}

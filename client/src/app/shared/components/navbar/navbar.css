@@ -1,0 +1,31 @@
+:host {
+  display: flex;
+  height: 64px;
+  align-items: center;
+}
+
+nav {
+  padding-inline: 1rem;
+}
+
+.nav-list {
+  display: grid;
+  border-radius: 0.5rem;
+  border: 1px solid var(--clr-gray-200);
+  overflow: hidden;
+  button {
+    background-color: var(--clr-gray-50);
+    border-radius: 0;
+    &:hover {
+      background-color: var(--clr-gray-100);
+    }
+    &.active {
+      background-color: var(--clr-gray-200);
+    }
+  }
+}
+
+button {
+  background-color: transparent;
+  border-radius: 0;
+}
