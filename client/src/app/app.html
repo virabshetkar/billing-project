@@ -1,5 +1,5 @@
-<header></header>
-<main>
-  <router-outlet></router-outlet>
-</main>
-<footer></footer>
+@if (isDesktopView()) {
+  <app-desktop></app-desktop>
+} @else {
+  <app-mobile></app-mobile>
+}

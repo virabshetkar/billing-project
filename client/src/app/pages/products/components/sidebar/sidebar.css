@@ -2,7 +2,7 @@
   display: grid;
   height: 100vh;
   height: 100dvh;
-  width: 350px;
+  width: 300px;
   border-right: 1px solid var(--clr-gray-100);
   align-content: start;
 }

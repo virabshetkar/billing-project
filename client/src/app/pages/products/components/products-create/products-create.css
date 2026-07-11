@@ -24,7 +24,7 @@ small.error {
 textarea {
   border: 1px solid var(--clr-gray-300);
   background-color: var(--clr-gray-100);
-  resize: vertical;
+  resize: none;
   outline: transparent;
   padding: 0.5rem;
 }

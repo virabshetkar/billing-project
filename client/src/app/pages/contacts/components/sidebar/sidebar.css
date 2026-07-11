@@ -4,10 +4,15 @@
   height: 100dvh;
   border-right: 1px solid var(--clr-gray-100);
   align-content: start;
+  width: 300px;
 }
 
 button {
   border-radius: 0;
+  background-color: var(--clr-gray-50);
+  &:hover {
+    background-color: var(--clr-gray-100);
+  }
   &.active {
     background-color: var(--clr-gray-200);
   }
@@ -78,4 +83,6 @@ h3 {
   font-weight: 400;
   margin: 0;
   padding: 1rem;
+  font-weight: 600;
+  color: var(--clr-gray-400);
 }

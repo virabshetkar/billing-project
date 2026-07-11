@@ -20,13 +20,6 @@ type NavItems = NavItem[];
 export class Navbar {
   readonly #route = inject(ActivatedRoute);
 
-  currRoute = toSignal(
-    this.#route.pathFromRoot[1].url.pipe(map((u) => u.map((a) => a.path).join('/'))),
-  );
-  currName = computed(
-    () => this.navItems.find((n) => n.route === this.currRoute())?.name ?? 'Menu',
-  );
-
   navItems: NavItems = [
     {
       name: 'Contacts',

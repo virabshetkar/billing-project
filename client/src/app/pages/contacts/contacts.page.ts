@@ -1,24 +1,25 @@
-import { BreakpointObserver, Breakpoints, LayoutModule } from '@angular/cdk/layout';
+import { LayoutModule } from '@angular/cdk/layout';
+import { ComponentPortal } from '@angular/cdk/portal';
 import { CdkTableModule } from '@angular/cdk/table';
-import { Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { map } from 'rxjs';
+import { SidebarPortal } from '../../shared/services/sidebar-portal';
 import { Sidebar } from './components/sidebar/sidebar';
-import { Navbar } from '../../shared/components/navbar/navbar';
 
 @Component({
   selector: 'app-contacts',
-  imports: [CdkTableModule, LayoutModule, RouterOutlet, Sidebar, Navbar],
+  imports: [CdkTableModule, LayoutModule, RouterOutlet],
   templateUrl: './contacts.page.html',
   styleUrl: './contacts.page.css',
 })
-export class ContactsPage {
-  readonly #bp = inject(BreakpointObserver);
+export class ContactsPage implements OnInit, OnDestroy {
+  readonly #sidebar = inject(SidebarPortal);
 
-  showSidebar = toSignal(
-    this.#bp
-      .observe([Breakpoints.Handset, Breakpoints.Tablet])
-      .pipe(map((value) => !value.matches)),
-  );
+  ngOnInit(): void {
+    this.#sidebar.set(new ComponentPortal(Sidebar));
+  }
+
+  ngOnDestroy(): void {
+    this.#sidebar.clear();
+  }
 }

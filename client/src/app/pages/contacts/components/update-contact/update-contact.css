@@ -18,7 +18,7 @@ form {
 
 small.error {
   height: 1rem;
-  color: light-dark(#b00, #d00);
+  color: var(--clr-danger);
 }
 
 .actions {
@@ -27,7 +27,7 @@ small.error {
   button {
     flex-grow: 1;
     &.delete {
-      background-color: #d00;
+      background-color: var(--clr-danger);
     }
   }
 }
