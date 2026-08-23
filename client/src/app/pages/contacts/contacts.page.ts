@@ -1,7 +1,7 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { CdkTableModule } from '@angular/cdk/table';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, EnvironmentInjector, inject, OnDestroy, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarPortal } from '../../shared/services/sidebar-portal';
 import { Sidebar } from './components/sidebar/sidebar';
@@ -14,9 +14,11 @@ import { Sidebar } from './components/sidebar/sidebar';
 })
 export class ContactsPage implements OnInit, OnDestroy {
   readonly #sidebar = inject(SidebarPortal);
+  readonly #environmentInjector = inject(EnvironmentInjector);
 
   ngOnInit(): void {
-    this.#sidebar.set(new ComponentPortal(Sidebar));
+    const componentPortal = new ComponentPortal(Sidebar, null, this.#environmentInjector);
+    this.#sidebar.set(componentPortal);
   }
 
   ngOnDestroy(): void {

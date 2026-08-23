@@ -1,0 +1,20 @@
+@let contact = selectedContact.value();
+
+@if (contact) {
+  <div class="header">
+    <div class="name">{{contact.name}}</div>
+    <div class="actions">
+      <a href="tel:{{contact.phone}}"><fa-icon [icon]="icons.faPhone"></fa-icon> {{contact.phone}}</a>
+      @if(contact.email) {
+        <a href="mailto:{{contact.email}}"><fa-icon [icon]="icons.faEnvelope"></fa-icon> {{contact.email}}</a>
+      }
+      <button type="button" class="edit icon-button" routerLink="edit"><fa-icon [icon]="icons.faPen"></fa-icon></button>
+      <button type="button" class="delete icon-button" (click)="onDelete()"><fa-icon [icon]="icons.faTrash"></fa-icon></button>
+      <button type="button" class="add-bill"><fa-icon [icon]="icons.faPlus"></fa-icon> Bill</button>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="main"></div>
+
+
+}

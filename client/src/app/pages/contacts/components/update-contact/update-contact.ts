@@ -25,7 +25,7 @@ export class UpdateContact {
   readonly #router = inject(Router);
 
   id = toSignal(this.#route.params.pipe(map((params) => params['contactId'])));
-  contact = httpResource<Contact>(() => `http://localhost:5085/api/contacts/${this.id()}`);
+  contact = httpResource<Contact>(() => `/api/contacts/${this.id()}`);
 
   contactModel = signal<UpdateContactForm>({
     name: '',
@@ -57,6 +57,7 @@ export class UpdateContact {
       next: () => {
         this.#contactApi.contacts.reload();
         this.contact.reload();
+        this.#router.navigate(['/contacts', this.id()]);
       },
     });
   }

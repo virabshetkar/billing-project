@@ -5,7 +5,7 @@
   <h3>Actions</h3>
   <ul>
     <li>
-      <button type="button" routerLink="/products/new" routerLinkActive="active">Create</button>
+      <button type="button" (click)="sidebarPortal.close()" routerLink="/products/new" routerLinkActive="active">Create</button>
     </li>
   </ul>
 </div>
@@ -15,12 +15,12 @@
     <ul>
       @for (item of products.value(); track item.id) {
         <li>
-          <button type="button" [routerLink]="['/products', item.id]" routerLinkActive="active" class="list-item-button">
+          <button type="button" (click)="sidebarPortal.close()" [routerLink]="['/products', item.id]" routerLinkActive="active" class="list-item-button">
             <div class="text">
             {{ item.title }}
             </div>
           </button>
-          <button type="button" class="delete" (click)="onDelete(item.id)">🗑</button>
+          <button type="button" class="delete" (click)="onDelete(item.id)"><fa-icon [icon]="icons.faTrashAlt"></fa-icon></button>
         </li>
       }
     </ul>

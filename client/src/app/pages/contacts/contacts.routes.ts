@@ -20,6 +20,11 @@ export const routes: Routes = [
       {
         path: ':contactId',
         loadComponent: () =>
+          import('./components/view-contact/view-contact').then((c) => c.ViewContact),
+      },
+      {
+        path: ':contactId/edit',
+        loadComponent: () =>
           import('./components/update-contact/update-contact').then((c) => c.UpdateContact),
       },
     ],

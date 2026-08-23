@@ -1,0 +1,14 @@
+:host {
+  display: grid;
+  height: 100vh;
+  height: 100dvh;
+  grid-template-rows: auto 1fr auto;
+}
+
+footer {
+  text-align: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  color: var(--clr-gray-400);
+  background-color: var(--clr-gray-100);
+}

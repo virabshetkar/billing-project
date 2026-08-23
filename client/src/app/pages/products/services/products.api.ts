@@ -6,10 +6,10 @@ import { Product } from '../models/products';
 export class ProductsApi {
   readonly #http = inject(HttpClient);
 
-  products = httpResource<Product[]>(() => 'http://localhost:5085/api/products');
+  products = httpResource<Product[]>(() => '/api/products');
 
   selectedProduct = httpResource<Product>(() =>
-    this.productId() ? `http://localhost:5085/api/products/${this.#productId()}` : undefined,
+    this.productId() ? `/api/products/${this.#productId()}` : undefined,
   );
 
   readonly #productId = signal('');
@@ -20,14 +20,14 @@ export class ProductsApi {
   }
 
   create(product: { title: string; description: string }) {
-    return this.#http.post<Product>('http://localhost:5085/api/products', product);
+    return this.#http.post<Product>('/api/products', product);
   }
 
   update(id: string, product: { title: string; description: string }) {
-    return this.#http.put<Product>(`http://localhost:5085/api/products/${id}`, product);
+    return this.#http.put<Product>(`/api/products/${id}`, product);
   }
 
   delete(id: string) {
-    return this.#http.delete(`http://localhost:5085/api/products/${id}`);
+    return this.#http.delete(`/api/products/${id}`);
   }
 }

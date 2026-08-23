@@ -113,3 +113,11 @@ button {
     transform: scaleX(1);
   }
 }
+
+.gray-out {
+  background-color: var(--clr-gray-300);
+}
+
+.overlay-panel {
+  background-color: var(--clr-gray-50);
+}

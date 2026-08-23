@@ -1,8 +1,7 @@
 import { CdkMenuModule } from '@angular/cdk/menu';
-import { Component, computed, effect, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
-import { map } from 'rxjs';
+import { Component, computed, inject } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { UiStore } from '../../stores/ui.store';
 
 type NavItem = {
   name: string;
@@ -18,7 +17,11 @@ type NavItems = NavItem[];
   styleUrl: './navbar.css',
 })
 export class Navbar {
-  readonly #route = inject(ActivatedRoute);
+  path = inject(UiStore).currentApp;
+
+  readonly currentName = computed(() => {
+    return this.navItems.find((v) => v.route === this.path())?.name ?? 'Menu';
+  });
 
   navItems: NavItems = [
     {

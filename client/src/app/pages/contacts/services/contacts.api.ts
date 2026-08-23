@@ -1,22 +1,35 @@
 import { HttpClient, httpResource } from '@angular/common/http';
-import { inject, Service } from '@angular/core';
+import { inject, Service, signal } from '@angular/core';
 import { Contact } from '../models/contact';
 
 @Service()
 export class ContactsApi {
   readonly #http = inject(HttpClient);
+  readonly #selectedContactId = signal<string | null>(null);
 
-  contacts = httpResource<Contact[]>(() => 'http://localhost:5085/api/contacts');
+  selectedContact = httpResource<Contact>(() =>
+    this.#selectedContactId() !== null ? `/api/contacts/${this.#selectedContactId()}` : undefined,
+  );
+
+  contacts = httpResource<Contact[]>(() => '/api/contacts');
+
+  selectContact(id: string) {
+    this.#selectedContactId.set(id);
+  }
+
+  clearSelectedContact() {
+    this.#selectedContactId.set(null);
+  }
 
   create(contact: { name: string; email: string; phone: string }) {
-    return this.#http.post<Contact>('http://localhost:5085/api/contacts', contact);
+    return this.#http.post<Contact>('/api/contacts', contact);
   }
 
   update(id: string, contact: { name: string; email: string; phone: string }) {
-    return this.#http.put<Contact>(`http://localhost:5085/api/contacts/${id}`, contact);
+    return this.#http.put<Contact>(`/api/contacts/${id}`, contact);
   }
 
   delete(id: string) {
-    return this.#http.delete<Contact>(`http://localhost:5085/api/contacts/${id}`);
+    return this.#http.delete<Contact>(`/api/contacts/${id}`);
   }
 }

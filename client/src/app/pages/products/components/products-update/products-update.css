@@ -11,14 +11,14 @@ h1 {
 }
 
 form {
-  width: 450px;
   display: grid;
+  min-width: 300px;
   gap: 0.5rem;
 }
 
 small.error {
   height: 1rem;
-  color: light-dark(#b00, var(--clr-danger));
+  color: var(--clr-danger);
 }
 
 textarea {

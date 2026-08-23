@@ -1,17 +1,18 @@
 :host {
   display: grid;
   height: 100%;
-  padding: 5rem 3rem;
   align-content: center;
   justify-content: center;
 }
 
 h1 {
+  margin: 0;
   font-weight: 100;
+  padding-block: 1rem;
 }
 
 form {
-  width: 450px;
+  min-width: 300px;
   display: grid;
   gap: 0.5rem;
 }

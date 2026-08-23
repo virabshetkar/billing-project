@@ -1,0 +1,45 @@
+:host {
+  height: 100%;
+}
+
+.name {
+  font-weight: 100;
+  font-size: 2.5rem;
+}
+
+.actions {
+  padding-block: 1rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  a {
+    text-decoration: none;
+    color: inherit;
+    border-radius: 100px;
+    display: inline-block;
+    background-color: var(--clr-gray-100);
+    padding: 0.5rem 1rem;
+    &:hover {
+      background-color: var(--clr-gray-200);
+    }
+  }
+  button {
+    border-radius: 100px;
+    &.delete {
+      background-color: var(--clr-danger);
+    }
+  }
+}
+
+.header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--clr-gray-100);
+}
+
+.icon-button {
+  aspect-ratio: 1 / 1;
+  height: 36px;
+  display: grid;
+  place-content: center;
+}

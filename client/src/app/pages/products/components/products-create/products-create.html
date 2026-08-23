@@ -1,22 +1,23 @@
-<h1>Create product</h1>
-<form (submit)="onSubmit($event)">
-  <div class="form-group">
-    <label for="title" class="required">Title</label>
-    <input id="title" type="text" [formField]="productForm.title" />
-  </div>
-  <small class="error">
-    @if (productForm.title().touched() && productForm.title().invalid()) {
-      {{ productForm.title().errors()?.[0]?.message }}
-    }
-  </small>
-  <div class="form-group">
-    <label for="description">Description</label>
-    <textarea id="description" type="text" [formField]="productForm.description" [rows]="5"></textarea>
-  </div>
-  <small class="error">
-    @if (productForm.description().touched() && productForm.description().invalid()) {
-      {{ productForm.description().errors()?.[0]?.message }}
-    }
-  </small>
-  <button type="submit" [disabled]="productForm().invalid()">Create</button>
-</form>
+<div class="container"><h1>Create product</h1>
+  <form (submit)="onSubmit($event)">
+    <div class="form-group">
+      <label for="title" class="required">Title</label>
+      <input id="title" type="text" [formField]="productForm.title" />
+    </div>
+    <small class="error">
+      @if (productForm.title().touched() && productForm.title().invalid()) {
+        {{ productForm.title().errors()?.[0]?.message }}
+      }
+    </small>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" type="text" [formField]="productForm.description" [rows]="5"></textarea>
+    </div>
+    <small class="error">
+      @if (productForm.description().touched() && productForm.description().invalid()) {
+        {{ productForm.description().errors()?.[0]?.message }}
+      }
+    </small>
+    <button type="submit" [disabled]="productForm().invalid()">Create</button>
+  </form>
+</div>
