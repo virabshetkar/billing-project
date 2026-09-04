@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, viewChild } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ContactsApi } from '../../services/contacts.api';
 import { SidebarPortal } from '../../../../shared/services/sidebar-portal';
+import { ContactsStore } from '../../services/contacts.store';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,7 +11,12 @@ import { SidebarPortal } from '../../../../shared/services/sidebar-portal';
 })
 export class Sidebar {
   items: { name: string; id: string }[] = [];
-  contacts = inject(ContactsApi).contacts;
+  contacts = inject(ContactsStore).contacts;
+  contactList = viewChild('contactList', { read: ElementRef<HTMLDivElement> });
 
   readonly sidebarPortal = inject(SidebarPortal);
+
+  scrollTop() {
+    (this.contactList()?.nativeElement as HTMLDivElement).scrollTo({ behavior: 'smooth', top: 0 });
+  }
 }

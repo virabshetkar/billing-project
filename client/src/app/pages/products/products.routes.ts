@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { ProductsApi } from './services/products.api';
+import { ProductsStore } from './services/products.store';
 
 export const routes: Routes = [
   {
@@ -23,6 +23,6 @@ export const routes: Routes = [
           import('./components/products-update/products-update').then((c) => c.ProductsUpdate),
       },
     ],
-    providers: [ProductsApi],
+    providers: [ProductsStore],
   },
 ];

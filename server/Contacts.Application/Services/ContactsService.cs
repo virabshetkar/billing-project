@@ -1,5 +1,4 @@
 using Contacts.Application.Contracts;
-using Contacts.Domain;
 
 namespace Contacts.Application.Services;
 

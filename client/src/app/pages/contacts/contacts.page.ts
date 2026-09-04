@@ -5,6 +5,7 @@ import { Component, EnvironmentInjector, inject, OnDestroy, OnInit } from '@angu
 import { RouterOutlet } from '@angular/router';
 import { SidebarPortal } from '../../shared/services/sidebar-portal';
 import { Sidebar } from './components/sidebar/sidebar';
+import { UiStore } from '../../shared/stores/ui.store';
 
 @Component({
   selector: 'app-contacts',
@@ -13,12 +14,14 @@ import { Sidebar } from './components/sidebar/sidebar';
   styleUrl: './contacts.page.css',
 })
 export class ContactsPage implements OnInit, OnDestroy {
+  private readonly uiStore = inject(UiStore);
   readonly #sidebar = inject(SidebarPortal);
   readonly #environmentInjector = inject(EnvironmentInjector);
 
   ngOnInit(): void {
     const componentPortal = new ComponentPortal(Sidebar, null, this.#environmentInjector);
     this.#sidebar.set(componentPortal);
+    this.uiStore.updateApp('contacts');
   }
 
   ngOnDestroy(): void {

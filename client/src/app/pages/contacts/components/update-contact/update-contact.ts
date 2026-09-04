@@ -5,7 +5,7 @@ import { email, form, FormField, pattern, required } from '@angular/forms/signal
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { Contact } from '../../models/contact';
-import { ContactsApi } from '../../services/contacts.api';
+import { ContactsStore } from '../../services/contacts.store';
 
 interface UpdateContactForm {
   name: string;
@@ -21,7 +21,7 @@ interface UpdateContactForm {
 })
 export class UpdateContact {
   readonly #route = inject(ActivatedRoute);
-  readonly #contactApi = inject(ContactsApi);
+  private readonly contactsStore = inject(ContactsStore);
   readonly #router = inject(Router);
 
   id = toSignal(this.#route.params.pipe(map((params) => params['contactId'])));
@@ -53,19 +53,16 @@ export class UpdateContact {
   onSubmit(event: Event) {
     event.preventDefault();
     if (this.contactForm().invalid()) return;
-    this.#contactApi.update(this.id(), this.contactModel()).subscribe({
+    this.contactsStore.update(this.id(), this.contactModel()).subscribe({
       next: () => {
-        this.#contactApi.contacts.reload();
-        this.contact.reload();
         this.#router.navigate(['/contacts', this.id()]);
       },
     });
   }
 
   onDelete() {
-    this.#contactApi.delete(this.id()).subscribe({
+    this.contactsStore.delete(this.id()).subscribe({
       next: () => {
-        this.#contactApi.contacts.reload();
         this.#router.navigate(['/contacts']);
       },
     });

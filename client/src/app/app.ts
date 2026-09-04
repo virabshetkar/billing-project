@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { UiStore } from './shared/stores/ui.store';
 import { DesktopLayout } from './shared/layouts/desktop/desktop.layout';
 import { MobileLayout } from './shared/layouts/mobile/mobile.layout';
+import { RouterLoadingService } from './shared/services/router-loading.service';
 
 @Component({
   selector: 'app-root',
@@ -11,4 +12,5 @@ import { MobileLayout } from './shared/layouts/mobile/mobile.layout';
 })
 export class App {
   isDesktopView = inject(UiStore).isDesktopView;
+  isLoading = inject(RouterLoadingService).routeLoading;
 }

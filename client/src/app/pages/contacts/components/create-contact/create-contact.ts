@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
-import { email, form, FormField, min, pattern, required } from '@angular/forms/signals';
-import { ContactsApi } from '../../services/contacts.api';
+import { email, form, FormField, pattern, required } from '@angular/forms/signals';
 import { Router } from '@angular/router';
+import { ContactsStore } from '../../services/contacts.store';
 
 interface CreateContactForm {
   name: string;
@@ -17,7 +17,7 @@ interface CreateContactForm {
 })
 export class CreateContact {
   readonly #router = inject(Router);
-  readonly #contactsApi = inject(ContactsApi);
+  private readonly contactsStore = inject(ContactsStore);
 
   contactModel = signal<CreateContactForm>({
     name: '',
@@ -35,9 +35,8 @@ export class CreateContact {
   onSubmit(event: Event) {
     event.preventDefault();
     if (this.contactForm().valid()) {
-      this.#contactsApi.create(this.contactModel()).subscribe({
+      this.contactsStore.create(this.contactModel()).subscribe({
         next: (value) => {
-          this.#contactsApi.contacts.reload();
           this.#router.navigate(['/contacts', value.id]);
         },
       });

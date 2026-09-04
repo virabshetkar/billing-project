@@ -1,36 +1,27 @@
 import { computed, inject } from '@angular/core';
-import { signalStore, withComputed, withMethods, withProps, withState } from '@ngrx/signals';
+import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { LayoutService } from '../services/layout.service';
-import { NavigationEnd, Router } from '@angular/router';
-import { distinctUntilChanged, filter, map } from 'rxjs';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 export type UiState = {
-  isDesktopView: boolean;
-  isMobileView: boolean;
+  theme: string;
+  currentApp: string;
 };
 
 export const UiStore = signalStore(
   { providedIn: 'root' },
-  withState({
+  withState<UiState>({
     theme: 'dark',
+    currentApp: '',
   }),
-  withProps(() => ({
-    layout: inject(LayoutService),
-    router: inject(Router),
-  })),
-  withProps(({ router }) => {
-    const currentApp = toSignal(
-      router.events.pipe(
-        filter((val) => val instanceof NavigationEnd),
-        map((val) => val.url.split('/')[1] ?? ''),
-        distinctUntilChanged(),
-      ),
-    );
-    return { currentApp };
-  }),
-  withComputed(({ layout }) => ({
+  withComputed((_, layout = inject(LayoutService)) => ({
     isDesktopView: layout.isDesktopView,
     isMobileView: computed(() => !layout.isDesktopView()),
   })),
+  withMethods((store) => {
+    return {
+      updateApp(name: string) {
+        patchState(store, (state) => ({ ...state, currentApp: name }));
+      },
+    };
+  }),
 );

@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Contacts.Application.Contracts;
 using Contacts.Domain;
 using Contacts.Domain.Exceptions;
@@ -17,20 +16,20 @@ public class BillsRepository : IBillsRepository
         this.context = context;
     }
 
-    public async Task<BillModel> CreateBill(BillModel bill)
+    public async Task<BillModel> CreateBill(BillModel bill, CancellationToken cancellationToken = default)
     {
         var billModel = await this.context.Bills.AddAsync(bill);
-        await this.context.SaveChangesAsync();
+        await this.context.SaveChangesAsync(cancellationToken);
         return billModel.Entity;
     }
 
-    public async Task<BillModel?> DeleteBill(Guid billId)
+    public async Task<BillModel?> DeleteBill(Guid billId, CancellationToken cancellationToken = default)
     {
         var billModel = await this.context.Bills.FirstOrDefaultAsync(b => b.Id == billId);
         if (billModel is null) return null;
         if (billModel.Status != BillStatus.Draft) throw new BusinessRuleException("Can only delete bills in draft.");
 
-        await this.context.Bills.Where(b => b.Id == billId).ExecuteDeleteAsync();
+        await this.context.Bills.Where(b => b.Id == billId).ExecuteDeleteAsync(cancellationToken);
         return billModel;
     }
 
@@ -46,31 +45,31 @@ public class BillsRepository : IBillsRepository
         return bill;
     }
 
-    public async Task<BillModel?> IssueBill(Guid billId)
+    public async Task<BillModel?> IssueBill(Guid billId, CancellationToken cancellationToken = default)
     {
         var bill = await this.context.Bills.FirstOrDefaultAsync(b => b.Id == billId);
         if (bill is null) return null;
 
         bill.IssueBill();
 
-        await this.context.SaveChangesAsync();
+        await this.context.SaveChangesAsync(cancellationToken);
 
         return bill;
     }
 
-    public async Task<BillModel?> PayBill(Guid billId)
+    public async Task<BillModel?> PayBill(Guid billId, CancellationToken cancellationToken = default)
     {
         var bill = await this.context.Bills.FirstOrDefaultAsync(b => b.Id == billId);
         if (bill is null) return null;
 
         bill.PayBill();
 
-        await this.context.SaveChangesAsync();
+        await this.context.SaveChangesAsync(cancellationToken);
 
         return bill;
     }
 
-    public async Task<BillModel> PutBill(Guid billId, BillModel bill)
+    public async Task<BillModel> PutBill(Guid billId, BillModel bill, CancellationToken cancellationToken = default)
     {
         var billModel = await this.context.Bills.FirstOrDefaultAsync(b => b.Id == billId);
 
@@ -89,7 +88,7 @@ public class BillsRepository : IBillsRepository
             throw new Exception("Can't create using PUT");
         }
 
-        await this.context.SaveChangesAsync();
+        await this.context.SaveChangesAsync(cancellationToken);
 
         return bill;
     }

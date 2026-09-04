@@ -8,7 +8,6 @@ namespace Contacts.WebApi.Controllers;
 public class BillsController : ControllerBase
 {
     private readonly IBillsService billsService;
-
     public BillsController(IBillsService billsService)
     {
         this.billsService = billsService;
@@ -24,8 +23,9 @@ public class BillsController : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<BillDto>> GetOne(Guid id)
     {
-        var bills = await this.billsService.GetBill(id);
-        return Ok(bills);
+        var bill = await this.billsService.GetBill(id);
+        if (bill is null) return NotFound();
+        return Ok(bill);
     }
 
     [HttpPost]
@@ -33,14 +33,6 @@ public class BillsController : ControllerBase
     {
         var bill = await this.billsService.CreateBill(billRequest);
         return CreatedAtAction(nameof(GetOne), new { id = bill.Id }, bill);
-    }
-
-    [HttpDelete("{id:guid}")]
-    public async Task<ActionResult<BillDto>> Delete(Guid id)
-    {
-        var bill = await this.billsService.DeleteBill(id);
-        if (bill is null) return NotFound();
-        return Ok(bill);
     }
 
     [HttpPut("{id:guid}")]
@@ -52,9 +44,17 @@ public class BillsController : ControllerBase
             return Ok(bill);
         }
         return CreatedAtAction(nameof(GetOne), new { id = bill.Id }, bill);
+
+    }
+    [HttpDelete("{id:guid}")]
+    public async Task<ActionResult<BillDto>> Delete(Guid id)
+    {
+        var bill = await this.billsService.DeleteBill(id);
+        if (bill is null) return NotFound();
+        return Ok(bill);
     }
 
-    [HttpPost("{id:guid}/issue")]
+    [HttpPut("{id:guid}/issue")]
     public async Task<ActionResult<BillDto>> Issue(Guid id)
     {
         var bill = await this.billsService.IssueBill(id);
@@ -62,7 +62,7 @@ public class BillsController : ControllerBase
         return Ok(bill);
     }
 
-    [HttpPost("{id:guid}/pay")]
+    [HttpPut("{id:guid}/pay")]
     public async Task<ActionResult<BillDto>> Pay(Guid id)
     {
         var bill = await this.billsService.PayBill(id);

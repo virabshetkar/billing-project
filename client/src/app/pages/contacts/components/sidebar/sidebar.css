@@ -7,6 +7,17 @@
   width: 300px;
 }
 
+.contacts {
+  position: relative;
+  display: grid;
+}
+
+.loading-container {
+  position: absolute;
+  inset: 0px;
+  background-color: var(--clr-gray-100);
+}
+
 button {
   border-radius: 0;
   background-color: var(--clr-gray-50);
@@ -43,6 +54,7 @@ h1 {
   }
   display: grid;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .options-list {
@@ -63,7 +75,8 @@ ul {
   margin: 0;
   padding: 0;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
+
   li {
     button {
       width: 100%;
@@ -85,4 +98,32 @@ h3 {
   padding: 1rem;
   font-weight: 600;
   color: var(--clr-gray-400);
+}
+
+.item-enter {
+  animation: slide-in 100ms ease-out both;
+  animation-delay: var(--delay);
+}
+
+.item-leave {
+  animation: slide-out 100ms ease-out both;
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out {
+  to {
+    opacity: 0;
+    transform: translateX(50px);
+  }
 }

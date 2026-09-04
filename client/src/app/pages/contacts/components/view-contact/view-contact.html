@@ -1,20 +1,35 @@
-@let contact = selectedContact.value();
+@let contact = selectedContact.hasValue() ? selectedContact.value() : undefined;
+@let error = selectedContact.error();
+@let isLoading = selectedContact.isLoading();
 
-@if (contact) {
-  <div class="header">
-    <div class="name">{{contact.name}}</div>
-    <div class="actions">
-      <a href="tel:{{contact.phone}}"><fa-icon [icon]="icons.faPhone"></fa-icon> {{contact.phone}}</a>
-      @if(contact.email) {
-        <a href="mailto:{{contact.email}}"><fa-icon [icon]="icons.faEnvelope"></fa-icon> {{contact.email}}</a>
-      }
-      <button type="button" class="edit icon-button" routerLink="edit"><fa-icon [icon]="icons.faPen"></fa-icon></button>
-      <button type="button" class="delete icon-button" (click)="onDelete()"><fa-icon [icon]="icons.faTrash"></fa-icon></button>
-      <button type="button" class="add-bill"><fa-icon [icon]="icons.faPlus"></fa-icon> Bill</button>
-    </div>
+@if(isLoading) {
+  <div animate.leave="loading-leave" class="loading-container">
+    <app-loading></app-loading>
   </div>
-  <div class="divider"></div>
-  <div class="main"></div>
+}
 
+@if(contact) {
+  <div class="header-container">
+    <div class="name">{{contact.name}}</div>
+    <button type="button" class="icon-button" [cdkMenuTriggerFor]="options">
+      <fa-icon [icon]="icons.faEllipsisV"></fa-icon>
+    </button>
+  </div>
+  <ng-template #options>
+    <div cdkMenu class="menu-container">
+      <div class="subheader">Contact</div>
+      <a cdkMenuItem href="tel:{{contact.phone}}" class="button"><fa-icon [icon]="icons.faPhone"></fa-icon> {{ contact.phone }}</a>
+      <a cdkMenuItem href="mailto:{{contact.email}}" class="button"><fa-icon [icon]="icons.faEnvelope"></fa-icon> {{ contact.email }}</a>
+      <div class="divider"></div>
+      <div class="subheader">Actions</div>
+      <button type="button" class="edit" routerLink="edit"><fa-icon [icon]="icons.faPen"></fa-icon> Edit</button>
+      <button cdkMenuItem class="delete" type="button" (click)="onDelete()"><fa-icon [icon]="icons.faTrash"></fa-icon> Delete</button>
+  </div>
+  </ng-template>
+}
 
+@if(error) {
+  <div class="error-container">
+    <h1>Cannot Load Contact</h1>
+  </div>
 }

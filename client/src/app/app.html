@@ -1,3 +1,8 @@
+@if(isLoading()) {
+  <div class="progress-track">
+    <div class="progress-bar" animate.leave="progress-bar-leave"></div>
+  </div>
+}
 @if (isDesktopView()) {
   <app-desktop></app-desktop>
 } @else {

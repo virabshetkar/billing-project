@@ -20,7 +20,7 @@ public class ContactsController : ControllerBase
         return Ok(contacts);
     }
 
-    [HttpGet("{id}", Name = "GetContact")]
+    [HttpGet("{id:guid}", Name = "GetContact")]
     public async Task<ActionResult<ContactDto?>> GetOne(Guid id)
     {
         var contact = await this.service.GetContact(id);
@@ -35,7 +35,7 @@ public class ContactsController : ControllerBase
         return CreatedAtAction(nameof(GetOne), new { id = contactModel.Id }, contactModel);
     }
 
-    [HttpPut("{id}", Name = "PutContact")]
+    [HttpPut("{id:guid}", Name = "PutContact")]
     public async Task<IActionResult> Put(Guid id, CreateContactRequestDto contact)
     {
         var contactModel = await this.service.PutContact(id, contact);
@@ -47,7 +47,7 @@ public class ContactsController : ControllerBase
         return CreatedAtAction(nameof(GetOne), new { id = contactModel.Id }, contactModel);
     }
 
-    [HttpDelete("{id}", Name = "DeleteContact")]
+    [HttpDelete("{id:guid}", Name = "DeleteContact")]
     public async Task<IActionResult> Delete(Guid id)
     {
         var contactModel = await this.service.DeleteContact(id);

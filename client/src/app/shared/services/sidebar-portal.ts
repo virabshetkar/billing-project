@@ -28,6 +28,8 @@ export class SidebarPortal {
   }
 
   open() {
+    if (!this.portal()) return;
+
     this.overlayref.attach(this.portal());
 
     const sub = this.overlayref.backdropClick().subscribe(() => {

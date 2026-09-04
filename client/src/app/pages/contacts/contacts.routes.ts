@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { ContactsApi } from './services/contacts.api';
+import { ContactsStore } from './services/contacts.store';
 
 export const routes: Routes = [
   {
@@ -28,6 +28,6 @@ export const routes: Routes = [
           import('./components/update-contact/update-contact').then((c) => c.UpdateContact),
       },
     ],
-    providers: [ContactsApi],
+    providers: [ContactsStore],
   },
 ];

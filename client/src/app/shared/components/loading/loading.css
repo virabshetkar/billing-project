@@ -1,0 +1,18 @@
+:host {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-content: center;
+  transition: opacity 150ms;
+}
+
+@starting-style {
+  :host {
+    opacity: 0;
+  }
+}
+
+fa-icon {
+  font-size: 3rem;
+}

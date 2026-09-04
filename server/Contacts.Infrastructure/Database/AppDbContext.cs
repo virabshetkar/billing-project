@@ -1,4 +1,5 @@
 ﻿using Contacts.Domain;
+using Contacts.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -22,6 +23,40 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new ProductModelMapping());
         modelBuilder.ApplyConfiguration(new BillItemModelMapping());
         modelBuilder.ApplyConfiguration(new BillModelMapping());
+    }
+
+    public override int SaveChanges()
+    {
+        UpdateAuditFields();
+
+        return base.SaveChanges();
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        UpdateAuditFields();
+
+        return base.SaveChangesAsync(cancellationToken);
+    }
+
+
+    private void UpdateAuditFields()
+    {
+        var now = DateTime.UtcNow;
+
+        foreach (var entry in ChangeTracker.Entries<IAuditable>())
+        {
+            switch (entry.State)
+            {
+                case EntityState.Added:
+                    entry.Entity.CreatedAt = now;
+                    entry.Entity.UpdatedAt = now;
+                    break;
+                case EntityState.Modified:
+                    entry.Entity.UpdatedAt = now;
+                    break;
+            }
+        }
     }
 }
 

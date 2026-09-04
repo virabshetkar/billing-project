@@ -17,7 +17,7 @@ public class ContactsRepository : IContactsRepository
 
     public async Task<List<ContactModel>> GetAllContacts()
     {
-        return await this._context.Contacts.ToListAsync();
+        return await this._context.Contacts.OrderByDescending(c => c.UpdatedAt).ToListAsync();
     }
 
     public async Task<ContactModel?> GetContact(Guid id)

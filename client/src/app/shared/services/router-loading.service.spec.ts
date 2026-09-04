@@ -1,13 +1,12 @@
 import { TestBed } from '@angular/core/testing';
+import { RouterLoadingService } from './router-loading.service';
 
-import { ContactsApi } from './contacts.api';
-
-describe('ContactsApi', () => {
-  let service: ContactsApi;
+describe('RouterLoadingService', () => {
+  let service: RouterLoadingService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ContactsApi);
+    service = TestBed.inject(RouterLoadingService);
   });
 
   it('should be created', () => {

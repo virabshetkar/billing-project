@@ -9,15 +9,19 @@
     </li>
   </ul>
 </div>
-@if (contacts.hasValue() && contacts.value()?.length > 0) {
-  <h3>Contacts</h3>
-  <div class="contacts-list">
-    <ul>
-      @for (item of contacts.value(); track $index) {
-        <li>
-          <button type="button" (click)="sidebarPortal.close()" [routerLink]="['/contacts', item.id]" routerLinkActive="active">{{ item.name }}</button>
-        </li>
-      }
-    </ul>
-  </div>
-}
+
+<div class="contacts">
+  @if (contacts.hasValue() && contacts.value()?.length > 0) {
+    <h3>Contacts</h3>
+    <div class="contacts-list" #contactList>
+      <ul>
+        @for (item of contacts.value(); track item.id; let i = $index) {
+          <li animate.enter="item-enter" animate.leave="item-leave" [style.--delay]="i * 50 + 'ms'">
+            <button type="button" (click)="sidebarPortal.close()" [routerLink]="['/contacts', item.id]" routerLinkActive="active">{{ item.name }}</button>
+          </li>
+        }
+      </ul>
+    </div>
+  }
+</div>
+

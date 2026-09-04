@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { form, FormField, required } from '@angular/forms/signals';
-import { ProductsApi } from '../../services/products.api';
 import { Router } from '@angular/router';
+import { ProductsStore } from '../../services/products.store';
 
 interface CreateProductForm {
   title: string;
@@ -16,7 +16,7 @@ interface CreateProductForm {
 })
 export class ProductsCreate {
   readonly #router = inject(Router);
-  readonly #productsApi = inject(ProductsApi);
+  private readonly productsStore = inject(ProductsStore);
 
   productModel = signal<CreateProductForm>({
     title: '',
@@ -30,9 +30,9 @@ export class ProductsCreate {
   onSubmit(e: Event) {
     e.preventDefault();
     if (this.productForm().invalid()) return;
-    this.#productsApi.create(this.productModel()).subscribe({
+    this.productsStore.create(this.productModel()).subscribe({
       next: (product) => {
-        this.#productsApi.products.reload();
+        this.productsStore.products.reload();
         this.#router.navigate(['/products', product.id]);
       },
     });

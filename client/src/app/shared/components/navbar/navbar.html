@@ -1,4 +1,7 @@
 <nav>
+  @if(!isDesktopView() && isSidebarAvailable()) {
+    <button class="icon-button" type="button" (click)="openSidebar()"><fa-icon [icon]="icons.faBars"></fa-icon></button>
+  }
   <button [cdkMenuTriggerFor]="menu">{{ currentName() }} ▾</button>
 </nav>
 

@@ -1,12 +1,55 @@
-/* :host { */
-/*   display: grid; */
-/*   grid-template-rows: auto 1fr auto; */
-/*   grid-template-columns: auto 1fr; */
-/*   min-height: 100vh; */
-/*   min-height: 100dvh; */
-/* } */
-/**/
-/* aside { */
-/*   grid-row: span 3; */
-/*   grid-column: 1; */
-/* } */
+.progress-track {
+  height: 3px;
+  width: 100vw;
+  overflow: hidden;
+  position: fixed;
+  z-index: 100;
+}
+
+.progress-bar {
+  width: 30%;
+  height: 100%;
+  border-radius: 100px;
+
+  animation: progress 1.2s ease-in-out infinite;
+  background-color: var(--clr-gray-100);
+}
+
+.progress-bar-leave {
+  animation: progress-leave 500ms ease-in-out;
+}
+
+@keyframes progress {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  50% {
+    transform: translateX(250%);
+  }
+
+  100% {
+    transform: translateX(400%);
+  }
+}
+
+@keyframes progress-leave {
+  from {
+    scale: 0 1;
+    width: 100%;
+    transform: translateX(0);
+    opacity: 1;
+  }
+  50% {
+    width: 100%;
+    scale: 1 1;
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    width: 100%;
+    scale: 1 1;
+    transform: translateX(0);
+    opacity: 0;
+  }
+}

@@ -3,8 +3,8 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
-import { ProductsApi } from '../../services/products.api';
 import { SidebarPortal } from '../../../../shared/services/sidebar-portal';
+import { ProductsStore } from '../../services/products.store';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,18 +13,18 @@ import { SidebarPortal } from '../../../../shared/services/sidebar-portal';
   styleUrl: './sidebar.css',
 })
 export class Sidebar {
-  readonly #productsApi = inject(ProductsApi);
   readonly #router = inject(Router);
   readonly icons = { faTrashAlt };
   readonly sidebarPortal = inject(SidebarPortal);
+  readonly productsStore = inject(ProductsStore);
 
-  products = inject(ProductsApi).products;
-  productId = this.#productsApi.productId;
+  products = inject(ProductsStore).products;
+  productId = this.productsStore.selectedProductId;
 
   onDelete(id: string) {
-    this.#productsApi.delete(id).subscribe({
+    this.productsStore.delete(id).subscribe({
       next: () => {
-        this.#productsApi.products.reload();
+        this.productsStore.products.reload();
         const productId = this.productId();
 
         if (!productId || productId !== id) return;

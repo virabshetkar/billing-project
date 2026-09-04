@@ -1,6 +1,8 @@
-﻿namespace Contacts.Domain;
+﻿using Contacts.Domain.Interfaces;
 
-public class ContactModel
+namespace Contacts.Domain;
+
+public class ContactModel : IAuditable
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = null!;
@@ -9,5 +11,8 @@ public class ContactModel
     public ICollection<BillModel> Bills { get; set; } = [];
 
     public decimal TotalDebt => Bills.Sum(b => b.TotalAmount);
+
+    public DateTime UpdatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
 }
 

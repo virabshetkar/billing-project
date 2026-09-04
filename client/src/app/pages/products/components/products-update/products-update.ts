@@ -1,11 +1,9 @@
-import { httpResource } from '@angular/common/http';
 import { Component, computed, effect, inject, OnDestroy, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { form, FormField, required } from '@angular/forms/signals';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
-import { Product } from '../../models/products';
-import { ProductsApi } from '../../services/products.api';
+import { ProductsStore } from '../../services/products.store';
 
 interface UpdateProductForm {
   title: string;
@@ -20,10 +18,11 @@ interface UpdateProductForm {
 })
 export class ProductsUpdate implements OnDestroy {
   readonly #router = inject(Router);
-  readonly #productsApi = inject(ProductsApi);
+  // readonly #productsApi = inject(ProductsApi);
+  private readonly productsStore = inject(ProductsStore);
 
   id = toSignal(inject(ActivatedRoute).params.pipe(map((params) => params['productId'])));
-  product = this.#productsApi.selectedProduct;
+  product = this.productsStore.selectedProduct;
 
   productModel = signal<UpdateProductForm>({
     title: '',
@@ -45,25 +44,25 @@ export class ProductsUpdate implements OnDestroy {
       });
     }),
     effect(() => {
-      this.#productsApi.setProductId(this.id());
+      this.productsStore.setProductId(this.id());
     }),
   ];
 
   onSubmit(e: Event) {
     e.preventDefault();
     if (this.productForm().invalid()) return;
-    this.#productsApi.update(this.id(), this.productModel()).subscribe({
+    this.productsStore.update(this.id(), this.productModel()).subscribe({
       next: () => {
         this.product.reload();
-        this.#productsApi.products.reload();
+        this.productsStore.products.reload();
       },
     });
   }
 
   onDelete() {
-    this.#productsApi.delete(this.id()).subscribe({
+    this.productsStore.delete(this.id()).subscribe({
       next: () => {
-        this.#productsApi.products.reload();
+        this.productsStore.products.reload();
         this.#router.navigate(['/products']);
       },
     });
@@ -79,6 +78,6 @@ export class ProductsUpdate implements OnDestroy {
   });
 
   ngOnDestroy(): void {
-    this.#productsApi.setProductId('');
+    this.productsStore.setProductId('');
   }
 }

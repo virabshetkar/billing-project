@@ -17,7 +17,7 @@ public class ProductsRepository : IProductsRepository
 
     public async Task<List<ProductModel>> GetAllProducts()
     {
-        return await this._context.Products.ToListAsync();
+        return await this._context.Products.OrderByDescending(p => p.UpdatedAt).ToListAsync();
     }
 
     public async Task<ProductModel?> GetProduct(Guid id)
