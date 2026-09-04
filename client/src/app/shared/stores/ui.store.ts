@@ -2,10 +2,10 @@ import { computed, inject } from '@angular/core';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { LayoutService } from '../services/layout.service';
 
-export type UiState = {
+export interface UiState {
   theme: string;
   currentApp: string;
-};
+}
 
 export const UiStore = signalStore(
   { providedIn: 'root' },

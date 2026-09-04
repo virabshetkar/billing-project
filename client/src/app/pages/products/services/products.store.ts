@@ -3,19 +3,19 @@ import { inject } from '@angular/core';
 import { signalStore, withState, withProps, withMethods, patchState } from '@ngrx/signals';
 import { Product } from '../models/products';
 
-export type ProductState = {
+export interface ProductState {
   selectedProductId: string | undefined;
-};
+}
 
-export type CreateProductDto = {
+export interface CreateProductDto {
   title: string;
   description: string;
-};
+}
 
-export type UpdateProductDto = {
+export interface UpdateProductDto {
   title: string;
   description: string;
-};
+}
 
 export const ProductsStore = signalStore(
   withState<ProductState>({ selectedProductId: '' }),

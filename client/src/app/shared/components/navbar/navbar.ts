@@ -1,5 +1,5 @@
 import { CdkMenuModule } from '@angular/cdk/menu';
-import { Component, computed, effect, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { UiStore } from '../../stores/ui.store';
 import { LayoutService } from '../../services/layout.service';
@@ -7,10 +7,10 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { SidebarPortal } from '../../services/sidebar-portal';
 
-type NavItem = {
+interface NavItem {
   name: string;
   route: string;
-};
+}
 
 type NavItems = NavItem[];
 

@@ -4,21 +4,21 @@ import { signalStore, withState, withProps, withMethods, patchState } from '@ngr
 import { tap } from 'rxjs';
 import { Contact } from '../models/contact';
 
-export type ContactsStoreState = {
+export interface ContactsStoreState {
   selectedContactId: string | null;
-};
+}
 
-export type CreateContactDto = {
+export interface CreateContactDto {
   name: string;
   email: string;
   phone: string;
-};
+}
 
-export type UpdateContactDto = {
+export interface UpdateContactDto {
   name: string;
   email: string;
   phone: string;
-};
+}
 
 export const ContactsStore = signalStore(
   withState<ContactsStoreState>({ selectedContactId: null }),
