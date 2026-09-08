@@ -1,13 +1,18 @@
 import { Overlay } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { inject, Service, signal } from '@angular/core';
+import { ComponentRef, inject, Service, signal } from '@angular/core';
+
+export interface SidebarInterface {
+  scrollTop(): void;
+}
 
 @Service({
   autoProvided: true,
 })
 export class SidebarPortal {
-  readonly #portal = signal<ComponentPortal<unknown> | null>(null);
+  readonly #portal = signal<ComponentPortal<SidebarInterface> | null>(null);
   portal = this.#portal.asReadonly();
+  sidebarRef = signal<ComponentRef<SidebarInterface> | null>(null);
 
   readonly #overlay = inject(Overlay);
 
@@ -19,7 +24,7 @@ export class SidebarPortal {
     hasBackdrop: true,
   });
 
-  set(portal: ComponentPortal<unknown>) {
+  set(portal: ComponentPortal<SidebarInterface>) {
     this.#portal.set(portal);
   }
 
@@ -30,7 +35,7 @@ export class SidebarPortal {
   open() {
     if (!this.portal()) return;
 
-    this.overlayref.attach(this.portal());
+    this.sidebarRef.set(this.overlayref.attach(this.portal()!));
 
     const sub = this.overlayref.backdropClick().subscribe(() => {
       this.overlayref.detach();
@@ -40,5 +45,10 @@ export class SidebarPortal {
 
   close() {
     this.overlayref.detach();
+  }
+
+  scrollTop() {
+    console.log('Called!');
+    this.sidebarRef()?.instance.scrollTop();
   }
 }

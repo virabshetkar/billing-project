@@ -4,6 +4,7 @@ import { form, FormField, required } from '@angular/forms/signals';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { ProductsStore } from '../../services/products.store';
+import { Loading } from '../../../../shared/components/loading/loading';
 
 interface UpdateProductForm {
   title: string;
@@ -12,28 +13,29 @@ interface UpdateProductForm {
 
 @Component({
   selector: 'app-products-update',
-  imports: [FormField],
+  imports: [FormField, Loading],
   templateUrl: './products-update.html',
   styleUrl: './products-update.css',
 })
 export class ProductsUpdate implements OnDestroy {
-  readonly #router = inject(Router);
-  // readonly #productsApi = inject(ProductsApi);
+  private readonly router = inject(Router);
   private readonly productsStore = inject(ProductsStore);
 
-  id = toSignal(inject(ActivatedRoute).params.pipe(map((params) => params['productId'])));
-  product = this.productsStore.selectedProduct;
+  protected readonly id = toSignal(
+    inject(ActivatedRoute).params.pipe(map((params) => params['productId'])),
+  );
+  protected readonly product = this.productsStore.selectedProduct;
 
-  productModel = signal<UpdateProductForm>({
+  protected readonly productModel = signal<UpdateProductForm>({
     title: '',
     description: '',
   });
 
-  productForm = form(this.productModel, (schema) => {
+  protected readonly productForm = form(this.productModel, (schema) => {
     required(schema.title, { message: 'Title is required' });
   });
 
-  effs = [
+  constructor() {
     effect(() => {
       const product = this.product.value();
 
@@ -42,11 +44,11 @@ export class ProductsUpdate implements OnDestroy {
       this.productModel.set({
         ...product,
       });
-    }),
+    });
     effect(() => {
       this.productsStore.setProductId(this.id());
-    }),
-  ];
+    });
+  }
 
   onSubmit(e: Event) {
     e.preventDefault();
@@ -63,7 +65,7 @@ export class ProductsUpdate implements OnDestroy {
     this.productsStore.delete(this.id()).subscribe({
       next: () => {
         this.productsStore.products.reload();
-        this.#router.navigate(['/products']);
+        this.router.navigate(['/products']);
       },
     });
   }

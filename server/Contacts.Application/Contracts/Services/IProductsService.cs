@@ -1,5 +1,3 @@
-using Contacts.Domain;
-
 namespace Contacts.Application.Contracts;
 
 public interface IProductsService

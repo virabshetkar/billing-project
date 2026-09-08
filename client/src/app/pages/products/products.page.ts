@@ -18,7 +18,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.#sidebar.set(new ComponentPortal(Sidebar, null, this.environmentInjector));
-    this.uiStore.updateApp('products');
+    this.uiStore.updateApp('Products');
   }
 
   ngOnDestroy(): void {

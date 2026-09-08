@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { Contact } from '../../models/contact';
 import { ContactsStore } from '../../services/contacts.store';
+import { SidebarPortal } from '../../../../shared/services/sidebar-portal';
 
 interface UpdateContactForm {
   name: string;
@@ -20,55 +21,61 @@ interface UpdateContactForm {
   styleUrl: './update-contact.css',
 })
 export class UpdateContact {
-  readonly #route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   private readonly contactsStore = inject(ContactsStore);
-  readonly #router = inject(Router);
+  private readonly sidebar = inject(SidebarPortal);
 
-  id = toSignal(this.#route.params.pipe(map((params) => params['contactId'])));
-  contact = httpResource<Contact>(() => `/api/contacts/${this.id()}`);
+  private readonly id = toSignal(this.route.params.pipe(map((params) => params['contactId'])));
 
-  contactModel = signal<UpdateContactForm>({
+  private readonly contactModel = signal<UpdateContactForm>({
     name: '',
     email: '',
     phone: '',
   });
 
-  contactForm = form(this.contactModel, (schema) => {
+  protected readonly contact = httpResource<Contact>(() => `/api/contacts/${this.id()}`);
+
+  protected readonly contactForm = form(this.contactModel, (schema) => {
     required(schema.name, { message: 'Name is required' });
     required(schema.phone, { message: 'Phone is required' });
     pattern(schema.phone, /^\d{10}$/, { message: 'Phone is invalid' });
     email(schema.email, { message: 'Email is invalid' });
   });
 
-  eff = effect(() => {
-    const contact = this.contact.value();
+  constructor() {
+    effect(() => {
+      const contact = this.contact.value();
 
-    if (!contact) return;
+      if (!contact) return;
 
-    this.contactModel.set({
-      ...contact,
+      this.contactModel.set({
+        ...contact,
+      });
     });
-  });
+  }
 
-  onSubmit(event: Event) {
+  protected onSubmit(event: Event) {
     event.preventDefault();
+
     if (this.contactForm().invalid()) return;
+
     this.contactsStore.update(this.id(), this.contactModel()).subscribe({
       next: () => {
-        this.#router.navigate(['/contacts', this.id()]);
+        this.router.navigate(['/contacts', this.id()]);
       },
     });
   }
 
-  onDelete() {
+  protected onDelete() {
     this.contactsStore.delete(this.id()).subscribe({
       next: () => {
-        this.#router.navigate(['/contacts']);
+        this.router.navigate(['/contacts']);
       },
     });
   }
 
-  unchanged = computed(() => {
+  protected readonly unchanged = computed(() => {
     const contact1 = this.contact.value();
     const contact2 = this.contactModel();
     if (!contact1) return false;

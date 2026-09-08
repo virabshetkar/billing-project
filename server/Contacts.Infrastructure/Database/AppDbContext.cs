@@ -69,6 +69,7 @@ public class ContactModelMapping : IEntityTypeConfiguration<ContactModel>
 
         builder.HasIndex(c => c.Email).IsUnique();
         builder.HasIndex(c => c.Phone).IsUnique();
+        builder.HasIndex(c => c.UpdatedAt);
 
         builder.HasKey(c => c.Id);
     }

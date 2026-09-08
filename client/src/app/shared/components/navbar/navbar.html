@@ -7,8 +7,8 @@
 
 <ng-template #menu>
   <div class="nav-list" cdkMenu>
-    @for (nav of navItems; track nav.name) {
-      <button cdkMenuItem [routerLink]="'/' + nav.route" routerLinkActive="active">{{ nav.name }}</button>
+    @for (app of apps(); track app.displayTitle) {
+      <button cdkMenuItem [routerLink]="'/' + app.route" routerLinkActive="active">{{ app.displayTitle }}</button>
     }
   </div>
 </ng-template>

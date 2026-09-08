@@ -1,35 +1,20 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
-import { SidebarPortal } from '../../../../shared/services/sidebar-portal';
+import { SidebarInterface, SidebarPortal } from '../../../../shared/services/sidebar-portal';
 import { ProductsStore } from '../../services/products.store';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [RouterLink, RouterLinkActive, FaIconComponent],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
 })
-export class Sidebar {
-  readonly #router = inject(Router);
-  readonly icons = { faTrashAlt };
+export class Sidebar implements SidebarInterface {
   readonly sidebarPortal = inject(SidebarPortal);
   readonly productsStore = inject(ProductsStore);
 
   products = inject(ProductsStore).products;
-  productId = this.productsStore.selectedProductId;
 
-  onDelete(id: string) {
-    this.productsStore.delete(id).subscribe({
-      next: () => {
-        this.productsStore.products.reload();
-        const productId = this.productId();
-
-        if (!productId || productId !== id) return;
-        this.#router.navigate(['/products']);
-      },
-    });
-  }
+  scrollTop(): void {}
 }

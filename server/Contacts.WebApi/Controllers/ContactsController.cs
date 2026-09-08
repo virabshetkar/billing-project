@@ -14,9 +14,9 @@ public class ContactsController : ControllerBase
     }
 
     [HttpGet(Name = "GetContacts")]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get(int limit = 20, int skip = 0)
     {
-        var contacts = await this.service.GetAllContacts();
+        var contacts = await this.service.GetAllContacts(limit, skip);
         return Ok(contacts);
     }
 

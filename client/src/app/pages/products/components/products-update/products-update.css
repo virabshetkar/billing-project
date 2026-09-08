@@ -4,6 +4,7 @@
   padding: 5rem 3rem;
   align-content: center;
   justify-content: center;
+  position: relative;
 }
 
 h1 {
@@ -37,5 +38,39 @@ textarea {
     &.delete {
       background-color: var(--clr-danger);
     }
+  }
+}
+
+.product-enter {
+  animation: fade-in 100ms ease-in both;
+  animation-delay: 100ms;
+}
+
+.loading-container {
+  position: absolute;
+  background-color: var(--clr-gray-50);
+  inset: 0;
+  z-index: 100;
+}
+
+.loading-leave {
+  animation: fade-out 100ms ease-in both;
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

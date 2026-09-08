@@ -3,7 +3,6 @@
   height: 100vh;
   height: 100dvh;
   width: 300px;
-  border-right: 1px solid var(--clr-gray-100);
   align-content: start;
 }
 
@@ -15,6 +14,11 @@ button {
   }
   &.active {
     background-color: var(--clr-gray-200);
+  }
+  .id {
+    font-size: 0.8rem;
+    color: var(--clr-gray-500);
+    font-weight: 600;
   }
 }
 
@@ -38,6 +42,7 @@ h1 {
 .products-list {
   display: grid;
   overflow-y: auto;
+  overflow-x: hidden;
 
   h3 {
     position: sticky;
@@ -68,7 +73,7 @@ ul {
   margin: 0;
   padding: 0;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
 
   li {
     display: flex;
@@ -125,4 +130,31 @@ h3 {
   margin: 0;
   padding: 1rem;
   color: var(--clr-gray-400);
+}
+
+.item-enter {
+  animation: slide-in 200ms ease-in-out both;
+  animation-delay: var(--delay);
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+
+.item-leave {
+  animation: slide-out 200ms ease-in-out both;
+}
+
+@keyframes slide-out {
+  to {
+    transform: translateX(50px);
+    opacity: 0;
+  }
 }

@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using Contacts.Application.Contracts;
 
 namespace Contacts.Application.Contracts;
 

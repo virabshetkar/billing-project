@@ -21,7 +21,7 @@ export class ContactsPage implements OnInit, OnDestroy {
   ngOnInit(): void {
     const componentPortal = new ComponentPortal(Sidebar, null, this.#environmentInjector);
     this.#sidebar.set(componentPortal);
-    this.uiStore.updateApp('contacts');
+    this.uiStore.updateApp('Contacts');
   }
 
   ngOnDestroy(): void {

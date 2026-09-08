@@ -12,7 +12,7 @@
   border-radius: 100px;
 
   animation: progress 1.2s ease-in-out infinite;
-  background-color: var(--clr-gray-100);
+  background-color: var(--clr-gray-300);
 }
 
 .progress-bar-leave {

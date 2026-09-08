@@ -9,4 +9,5 @@
 aside {
   grid-row: span 3;
   grid-column: 1;
+  border-right: 1px solid var(--clr-gray-100);
 }

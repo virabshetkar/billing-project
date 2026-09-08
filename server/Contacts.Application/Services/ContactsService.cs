@@ -33,9 +33,9 @@ public class ContactsService : IContactsService
         return contactModel.ToContactDto();
     }
 
-    public async Task<IList<ContactDto>> GetAllContacts()
+    public async Task<IList<ContactDto>> GetAllContacts(int limit, int skip)
     {
-        var contacts = await this.repo.GetAllContacts();
+        var contacts = await this.repo.GetAllContacts(limit, skip);
 
         return contacts.Select(c => c.ToContactDto()).ToList();
     }

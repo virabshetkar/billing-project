@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints, LayoutModule } from '@angular/cdk/layout';
-import { Component, inject } from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { SidebarPortal } from '../../services/sidebar-portal';
@@ -15,6 +15,9 @@ import { PortalModule } from '@angular/cdk/portal';
 })
 export class DesktopLayout {
   portal = inject(SidebarPortal).portal;
+
+  sidebarRef = viewChild('sidebarRef');
+
   showSidebar = toSignal(
     inject(BreakpointObserver)
       .observe([Breakpoints.Handset, Breakpoints.Tablet])

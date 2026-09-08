@@ -2,9 +2,15 @@ import { computed, inject } from '@angular/core';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { LayoutService } from '../services/layout.service';
 
+export interface NavItem {
+  displayTitle: string;
+  route: string;
+}
+
 export interface UiState {
   theme: string;
   currentApp: string;
+  apps: NavItem[];
 }
 
 export const UiStore = signalStore(
@@ -12,6 +18,7 @@ export const UiStore = signalStore(
   withState<UiState>({
     theme: 'dark',
     currentApp: '',
+    apps: [],
   }),
   withComputed((_, layout = inject(LayoutService)) => ({
     isDesktopView: layout.isDesktopView,
@@ -21,6 +28,11 @@ export const UiStore = signalStore(
     return {
       updateApp(name: string) {
         patchState(store, (state) => ({ ...state, currentApp: name }));
+      },
+      registerApp(item: NavItem) {
+        patchState(store, (state) => {
+          return { ...state, apps: [...state.apps, item] };
+        });
       },
     };
   }),

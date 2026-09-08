@@ -16,7 +16,7 @@ interface CreateContactForm {
   styleUrl: './create-contact.css',
 })
 export class CreateContact {
-  readonly #router = inject(Router);
+  private readonly router = inject(Router);
   private readonly contactsStore = inject(ContactsStore);
 
   contactModel = signal<CreateContactForm>({
@@ -37,7 +37,7 @@ export class CreateContact {
     if (this.contactForm().valid()) {
       this.contactsStore.create(this.contactModel()).subscribe({
         next: (value) => {
-          this.#router.navigate(['/contacts', value.id]);
+          this.router.navigate(['/contacts', value.id]);
         },
       });
     }

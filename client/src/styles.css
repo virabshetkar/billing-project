@@ -115,7 +115,7 @@ button {
 }
 
 .gray-out {
-  background-color: var(--clr-gray-300);
+  background-color: var(--clr-gray-200);
 }
 
 .overlay-panel {

@@ -7,13 +7,6 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { SidebarPortal } from '../../services/sidebar-portal';
 
-interface NavItem {
-  name: string;
-  route: string;
-}
-
-type NavItems = NavItem[];
-
 @Component({
   selector: 'app-navbar',
   imports: [RouterLink, RouterLinkActive, CdkMenuModule, FaIconComponent],
@@ -28,23 +21,13 @@ export class Navbar {
 
   protected readonly isDesktopView = inject(LayoutService).isDesktopView;
   protected readonly icons = { faBars };
+  protected readonly apps = inject(UiStore).apps;
 
-  private readonly path = inject(UiStore).currentApp;
+  private readonly title = inject(UiStore).currentApp;
 
   readonly currentName = computed(() => {
-    return this.navItems.find((v) => v.route === this.path())?.name ?? 'Menu';
+    return this.title() ?? 'Menu';
   });
-
-  navItems: NavItems = [
-    {
-      name: 'Contacts',
-      route: 'contacts',
-    },
-    {
-      name: 'Products',
-      route: 'products',
-    },
-  ];
 
   openSidebar() {
     this.sidebarPortal.open();

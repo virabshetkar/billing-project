@@ -15,7 +15,7 @@ interface CreateProductForm {
   styleUrl: './products-create.css',
 })
 export class ProductsCreate {
-  readonly #router = inject(Router);
+  private readonly router = inject(Router);
   private readonly productsStore = inject(ProductsStore);
 
   productModel = signal<CreateProductForm>({
@@ -33,7 +33,7 @@ export class ProductsCreate {
     this.productsStore.create(this.productModel()).subscribe({
       next: (product) => {
         this.productsStore.products.reload();
-        this.#router.navigate(['/products', product.id]);
+        this.router.navigate(['/products', product.id]);
       },
     });
   }

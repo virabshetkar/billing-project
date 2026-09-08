@@ -21,13 +21,13 @@ import { ContactsStore } from '../../services/contacts.store';
   styleUrl: './view-contact.css',
 })
 export class ViewContact implements OnInit, OnDestroy {
-  readonly #route = inject(ActivatedRoute);
-  readonly #router = inject(Router);
-  private contactsStore = inject(ContactsStore);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly contactsStore = inject(ContactsStore);
 
-  readonly selectedContact = this.contactsStore.selectedContact;
+  protected readonly selectedContact = this.contactsStore.selectedContact;
 
-  readonly icons = {
+  protected readonly icons = {
     faEnvelope,
     faPhone,
     faTrash,
@@ -35,13 +35,13 @@ export class ViewContact implements OnInit, OnDestroy {
     faEllipsisV,
   } as const;
 
-  readonly id = toSignal(this.#route.params.pipe(map((params) => params['contactId'])));
+  protected readonly id = toSignal(this.route.params.pipe(map((params) => params['contactId'])));
 
-  effs = [
+  constructor() {
     effect(() => {
       this.contactsStore.selectContact(this.id());
-    }),
-  ];
+    });
+  }
 
   ngOnInit(): void {
     this.contactsStore.selectContact(this.id());
@@ -51,10 +51,10 @@ export class ViewContact implements OnInit, OnDestroy {
     this.contactsStore.clearSelectedContact();
   }
 
-  onDelete() {
+  protected onDelete() {
     this.contactsStore.delete(this.id()).subscribe({
       next: () => {
-        this.#router.navigate(['/contacts']);
+        this.router.navigate(['/contacts']);
       },
     });
   }

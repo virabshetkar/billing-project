@@ -11,6 +11,19 @@ import { RouterLoadingService } from './shared/services/router-loading.service';
   styleUrl: './app.css',
 })
 export class App {
-  isDesktopView = inject(UiStore).isDesktopView;
-  isLoading = inject(RouterLoadingService).routeLoading;
+  private readonly uiStore = inject(UiStore);
+
+  protected readonly isDesktopView = this.uiStore.isDesktopView;
+  protected readonly isLoading = inject(RouterLoadingService).routeLoading;
+
+  constructor() {
+    this.uiStore.registerApp({
+      displayTitle: 'Contacts',
+      route: 'contacts',
+    });
+    this.uiStore.registerApp({
+      displayTitle: 'Products',
+      route: 'products',
+    });
+  }
 }
